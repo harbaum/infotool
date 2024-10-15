@@ -502,8 +502,14 @@ def apply(info, value, root=True):
                 ((value[0] == '"' and value[-1] == '"') or
                  (value[0] == "'" and value[-1] == "'"))):
                 value = value[1:-1]
+
+            # trying to remove the entry?
+            if value == "":
+                if "DefaultTool" in info:
+                    del info["DefaultTool"]
+            else:            
+                info["DefaultTool"] = value
             
-            info["DefaultTool"] = value
             print("ok")
             return True
             
@@ -529,10 +535,15 @@ def apply(info, value, root=True):
                 print("Error, ToolTypes index out of range")
                 return False
 
-            if index == len(info["ToolTypes"]):
-                info["ToolTypes"].append(value)
-            else:
-                info["ToolTypes"][index] = value
+            # trying to remove an entry?
+            if value == "":
+                if index < len(info["ToolTypes"]):
+                    info["ToolTypes"].pop(index)
+            else:            
+                if index == len(info["ToolTypes"]):
+                    info["ToolTypes"].append(value)
+                else:
+                    info["ToolTypes"][index] = value
 
             print("ok")                
             return True
@@ -695,7 +706,7 @@ def info_check(info):
     return True
 
 def usage():
-    print("Usage: infotool.py [options] <infofile> [values... <outfile>")
+    print("Usage: infotool.py [options] <infofile> [values... <outfile>]")
     print("Options:")
     print("     -e     export the embedded icons as PNGs")
     print("     -q     quiet, don't list the info file contents")

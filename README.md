@@ -6,7 +6,7 @@ to change all values and to import and export icon graphics.
 ## Usage
 
 ```
-Usage: infotool.py [options] <infofile> [values... <outfile>
+Usage: infotool.py [options] <infofile> [values... <outfile>]
 Options:
      -e     export the embedded icons as PNGs
      -q     quiet, don't list the info file contents
